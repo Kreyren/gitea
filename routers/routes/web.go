@@ -530,7 +530,13 @@ func RegisterRoutes(m *web.Route) {
 			m.Get("/milestones/{team}", reqMilestonesDashboardPageEnabled, user.Milestones)
 			m.Get("/members", org.Members)
 			m.Post("/members/action/{action}", org.MembersAction)
+			m.Get("/discussions", org.DiscussionHome)
 			m.Get("/teams", org.Teams)
+		}, context.OrgAssignment(true, false, true))
+
+		m.Group("/{org}", func() {
+			m.Get("/discussions/new", org.NewDiscussion)
+			m.Post("/discussions/action/new", org.CreateNewDiscussion)
 		}, context.OrgAssignment(true, false, true))
 
 		m.Group("/{org}", func() {
